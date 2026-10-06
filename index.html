@@ -81,7 +81,7 @@
         .line-height-1-5 { line-height: 1.5; }
         .line-height-2-0 { line-height: 2.0; }
         
-        /* Loading Overlay Overlay */
+        /* Loading Overlay */
         #globalLoader {
             position: fixed;
             inset: 0;
@@ -864,9 +864,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // KUNCI KEAMANAN UTAMA: Menggunakan browserSessionPersistence
-        // Ini memastikan pengunjung tidak akan pernah menggunakan sisa cache login Anda 
-        // setelah tab/browser ditutup.
+        // Pertahankan sesi login menggunakan batas Tab/Browser.
         setPersistence(auth, browserSessionPersistence).catch(console.error);
 
         // Dokumen Firestore yang menyimpan data portofolio secara terpusat
@@ -933,10 +931,16 @@
 
         // 3. MONITOR STATUS LOGIN ADMIN MELALUI FIREBASE
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            // KUNCI KEAMANAN: Memastikan User Ada dan MEMILIKI EMAIL.
+            // Mencegah login bocor dari "Sesi Anonymous" aplikasi Anda yang lain di origin yang sama.
+            if (user && user.email) {
                 window.appData.admin.isLoggedIn = true;
                 window.appData.admin.email = user.email;
             } else {
+                // Jika itu adalah sisa dari login tanpa email (Anonymous login dari web lain), LOGOUT PAKSA!
+                if (user && !user.email) {
+                    signOut(auth).catch(console.error);
+                }
                 window.appData.admin.isLoggedIn = false;
                 window.appData.admin.email = "admin@portofolio.id"; // reset view ke default
             }
@@ -1030,9 +1034,7 @@
                 if (saved) {
                     let parsedData = JSON.parse(saved);
                     // KUNCI KEAMANAN LOKAL:
-                    // Secara paksa mereset status admin menjadi FALSE dan menghapus email dari cache lokal.
-                    // Jika memang pengunjung tersebut adalah Admin, Firebase Auth akan mengubahnya 
-                    // kembali menjadi TRUE secara sah beberapa milidetik setelahnya.
+                    // Secara paksa mereset status admin menjadi FALSE.
                     if (parsedData.admin) {
                         parsedData.admin.isLoggedIn = false;
                         parsedData.admin.email = "";
