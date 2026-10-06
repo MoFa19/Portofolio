@@ -841,7 +841,7 @@
             signOut, 
             onAuthStateChanged,
             setPersistence,
-            browserLocalPersistence
+            browserSessionPersistence
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { 
             getFirestore, 
@@ -864,8 +864,10 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Pertahankan sesi login
-        setPersistence(auth, browserLocalPersistence).catch(console.error);
+        // KUNCI KEAMANAN UTAMA: Menggunakan browserSessionPersistence
+        // Ini memastikan pengunjung tidak akan pernah menggunakan sisa cache login Anda 
+        // setelah tab/browser ditutup.
+        setPersistence(auth, browserSessionPersistence).catch(console.error);
 
         // Dokumen Firestore yang menyimpan data portofolio secara terpusat
         const portfolioDoc = doc(db, "portfolio_data", "main_content");
@@ -1027,8 +1029,10 @@
                 const saved = localStorage.getItem("portfolio_pb_state_v2");
                 if (saved) {
                     let parsedData = JSON.parse(saved);
-                    // KUNCI KEAMANAN: Reset status login dari cache browser
-                    // Firebase Auth yang akan memvalidasinya secara sah di belakang layar
+                    // KUNCI KEAMANAN LOKAL:
+                    // Secara paksa mereset status admin menjadi FALSE dan menghapus email dari cache lokal.
+                    // Jika memang pengunjung tersebut adalah Admin, Firebase Auth akan mengubahnya 
+                    // kembali menjadi TRUE secara sah beberapa milidetik setelahnya.
                     if (parsedData.admin) {
                         parsedData.admin.isLoggedIn = false;
                         parsedData.admin.email = "";
@@ -1050,7 +1054,7 @@
             }
             // Mengunggah ke server Cloud Firebase secara otomatis
             if (typeof window.syncToFirestore === "function") {
-                window.syncToFirestore();
+                window.syncToFirestore(); // Otomatis kirim ke database
             }
         };
 
