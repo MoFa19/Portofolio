@@ -29,7 +29,7 @@
         }
     </script>
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,9 +80,29 @@
         .line-height-1-15 { line-height: 1.15; }
         .line-height-1-5 { line-height: 1.5; }
         .line-height-2-0 { line-height: 2.0; }
+        
+        /* Loading Overlay Overlay */
+        #globalLoader {
+            position: fixed;
+            inset: 0;
+            background: #0b0f19;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col md:flex-row antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- Global Loading Screen -->
+    <div id="globalLoader">
+        <div class="flex flex-col items-center gap-3 text-sky-400">
+            <i class="fas fa-circle-notch fa-spin text-4xl"></i>
+            <span class="text-sm font-medium tracking-widest uppercase">Memuat Data Cloud...</span>
+        </div>
+    </div>
 
     <!-- Mobile Top Header Bar -->
     <header class="md:hidden glass-panel border-b border-slate-800 p-4 sticky top-0 z-40 flex items-center justify-between">
@@ -124,8 +144,8 @@
                 </div>
             </div>
 
-            <h2 id="sidebarProfileName" class="font-bold text-lg text-white mt-3 mb-0.5 tracking-tight">AI & Critical Mind</h2>
-            <p id="sidebarProfileBio" class="text-xs text-slate-400 max-w-[200px] leading-relaxed">Pemanfaat AI & Critical Thinker</p>
+            <h2 id="sidebarProfileName" class="font-bold text-lg text-white mt-3 mb-0.5 tracking-tight">Loading...</h2>
+            <p id="sidebarProfileBio" class="text-xs text-slate-400 max-w-[200px] leading-relaxed">Loading bio...</p>
             
             <input type="file" id="profileImageFileInput" accept="image/*" class="hidden" onchange="onProfileImageSelected(event)">
 
@@ -203,7 +223,7 @@
                             <div class="flex-1">
                                 <h4 class="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">Tentang Saya (About Me)</h4>
                                 <p id="aboutMeContentText" class="text-slate-200 leading-relaxed text-sm sm:text-base">
-                                    saya yang terbiasa memanfaatkan AI dalam kehidupan sehari-hari untuk efisiensi pekerjaan ataupun lainnya, dengan poin plus saya yang sangat bisa berfikir kritis
+                                    Loading About Me...
                                 </p>
                             </div>
                         </div>
@@ -220,8 +240,8 @@
                             <i class="fas fa-edit"></i>
                         </button>
                     </div>
-                    <h3 id="card1-title" class="font-bold text-lg mb-1 text-white">Work Efficiency</h3>
-                    <p id="card1-desc" class="text-sm text-slate-400">Otomatisasi tugas berulang dan riset data.</p>
+                    <h3 id="card1-title" class="font-bold text-lg mb-1 text-white">Loading...</h3>
+                    <p id="card1-desc" class="text-sm text-slate-400">Loading...</p>
                 </div>
                 
                 <div id="card-crit-anal" class="glass-panel p-5 rounded-2xl border border-slate-700 hover:border-teal-500/50 transition-colors relative group">
@@ -231,8 +251,8 @@
                             <i class="fas fa-edit"></i>
                         </button>
                     </div>
-                    <h3 id="card2-title" class="font-bold text-lg mb-1 text-white">Critical Analysis</h3>
-                    <p id="card2-desc" class="text-sm text-slate-400">Evaluasi masalah sebelum merumuskan strategi.</p>
+                    <h3 id="card2-title" class="font-bold text-lg mb-1 text-white">Loading...</h3>
+                    <p id="card2-desc" class="text-sm text-slate-400">Loading...</p>
                 </div>
                 
                 <div onclick="switchTab('links')" class="glass-panel p-5 rounded-2xl border border-slate-700 hover:border-purple-500/50 transition-colors cursor-pointer group shadow-lg">
@@ -844,40 +864,55 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Pertahankan sesi login agar tidak perlu login berulang kali
+        // Pertahankan sesi login
         setPersistence(auth, browserLocalPersistence).catch(console.error);
 
         // Dokumen Firestore yang menyimpan data portofolio secara terpusat
         const portfolioDoc = doc(db, "portfolio_data", "main_content");
+        
+        let initialLoad = true;
 
-        // 1. SINKRONISASI REAL-TIME CLOUD:
-        // Setiap pengunjung membuka web, browser langsung membaca data terbaru dari server asia-southeast2
+        // 1. SINKRONISASI REAL-TIME CLOUD (MENGGUNAKAN FIRESTORE)
         onSnapshot(portfolioDoc, (snapshot) => {
             if (snapshot.exists()) {
                 const cloudData = snapshot.data();
+                
+                // Timpa seluruh appData dengan data dari CLOUD
                 if (cloudData.profile) window.appData.profile = cloudData.profile;
                 if (cloudData.links) window.appData.links = cloudData.links;
                 if (cloudData.favourites) window.appData.favourites = cloudData.favourites;
                 if (cloudData.notes) window.appData.notes = cloudData.notes;
                 if (cloudData.belajar) window.appData.belajar = cloudData.belajar;
 
-                // Tampilkan data ke tampilan website
+                // Tampilkan data ke layar
                 renderProfileElements();
                 renderLinks();
                 renderFavourites();
                 renderNotes();
                 renderBelajarItems();
             } else if (window.appData.admin.isLoggedIn) {
-                // Inisialisasi awal ke server jika data masih kosong
+                // Inisialisasi awal ke server jika data kosong dan admin sedang login
                 window.syncToFirestore();
             }
+            
+            // Sembunyikan layar loading setelah koneksi data pertama selesai
+            if (initialLoad) {
+                document.getElementById('globalLoader').style.opacity = '0';
+                setTimeout(() => document.getElementById('globalLoader').style.display = 'none', 500);
+                initialLoad = false;
+            }
         }, (err) => {
-            console.warn("Koneksi Firestore stream:", err.message);
+            console.warn("Koneksi Firestore stream terputus:", err.message);
+            if (initialLoad) {
+                document.getElementById('globalLoader').style.opacity = '0';
+                setTimeout(() => document.getElementById('globalLoader').style.display = 'none', 500);
+                initialLoad = false;
+            }
         });
 
         // 2. FUNGSI MENYIMPAN DATA KE SERVER CLOUD FIRESTORE
         window.syncToFirestore = async function() {
-            if (!auth.currentUser) return;
+            if (!auth.currentUser) return; // Hanya jalankan jika ada user Firebase yg login
             try {
                 await setDoc(portfolioDoc, {
                     profile: window.appData.profile,
@@ -887,21 +922,21 @@
                     belajar: window.appData.belajar,
                     lastUpdated: new Date().toISOString()
                 });
-                window.showToast("Data berhasil tersimpan ke Cloud Firebase!", "fas fa-cloud-arrow-up text-emerald-400");
+                console.log("Auto-save Cloud Berhasil.");
             } catch (e) {
                 console.error("Gagal simpan ke cloud:", e);
                 window.showToast("Gagal simpan ke cloud: " + e.message, "fas fa-circle-exclamation text-rose-400");
             }
         };
 
-        // 3. MONITOR STATUS LOGIN ADMIN
+        // 3. MONITOR STATUS LOGIN ADMIN MELALUI FIREBASE
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 window.appData.admin.isLoggedIn = true;
                 window.appData.admin.email = user.email;
-                window.showToast("Terotentikasi sebagai Admin: " + user.email, "fas fa-shield-alt text-emerald-400");
             } else {
                 window.appData.admin.isLoggedIn = false;
+                window.appData.admin.email = "admin@portofolio.id"; // reset view ke default
             }
             window.updateAdminUI();
         });
@@ -917,10 +952,11 @@
             }
 
             try {
+                // Firebase Login
                 await signInWithEmailAndPassword(auth, emailInput, passInput);
                 window.closeModal('adminAuthModal');
                 window.showToast("Login Admin Berhasil!", "fas fa-check text-emerald-400");
-                // Sinkronisasi data saat pertama kali masuk
+                // Paksa sinkronisasi cloud sekali setelah masuk
                 window.syncToFirestore();
             } catch (error) {
                 window.showToast("Gagal Login: " + error.message, "fas fa-circle-xmark text-rose-400");
@@ -930,7 +966,7 @@
         // 5. HANDLER LOGOUT ADMIN
         window.handleAdminLogout = async function() {
             try {
-                await signOut(auth);
+                await signOut(auth); // Firebase Logout
                 window.closeModal('adminAuthModal');
                 window.showToast("Berhasil logout dari akun admin.", "fas fa-info-circle text-sky-400");
             } catch (error) {
@@ -939,7 +975,7 @@
         };
     </script>
 
-    <!-- ==================== SKRIP LOGIKA UTAMA APLIKASI ==================== -->
+    <!-- ==================== SKRIP LOGIKA UTAMA UI & CRUD APLIKASI ==================== -->
     <script>
         const DEFAULT_STATE = {
             profile: {
@@ -961,14 +997,10 @@
                 isLoggedIn: false
             },
             links: [
-                { id: "lnk-1", title: "GitHub Profile", url: "https://github.com", icon: "fab fa-github", desc: "Repositori proyek dan kode sumber terbuka" },
-                { id: "lnk-2", title: "LinkedIn Network", url: "https://linkedin.com", icon: "fab fa-linkedin", desc: "Jejak profesional dan koneksi karir" },
-                { id: "lnk-3", title: "YouTube Channel", url: "https://youtube.com", icon: "fab fa-youtube", desc: "Eksplorasi AI, alur kerja dan edukasi" }
+                { id: "lnk-1", title: "GitHub Profile", url: "https://github.com", icon: "fab fa-github", desc: "Repositori proyek dan kode sumber terbuka" }
             ],
             favourites: [
-                { id: "fav-1", category: "gambar", title: "Cybernetic Architecture", url: "https://unsplash.com", banner: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop&q=60", desc: "Seni konsep integrasi teknologi masa depan" },
-                { id: "fav-2", category: "film", title: "Interstellar", url: "https://www.imdb.com/title/tt0816692/", banner: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&auto=format&fit=crop&q=60", desc: "Mahakarya sains, penalaran, dan emosi manusia" },
-                { id: "fav-3", category: "game", title: "Detroit: Become Human", url: "https://store.steampowered.com", banner: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60", desc: "Eksplorasi etika kecerdasan buatan" }
+                { id: "fav-1", category: "film", title: "Interstellar", url: "https://www.imdb.com/title/tt0816692/", banner: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&auto=format&fit=crop&q=60", desc: "Mahakarya sains, penalaran, dan emosi manusia" }
             ],
             notes: [
                 {
@@ -982,45 +1014,23 @@
                 }
             ],
             belajar: {
-                prompt: [
-                    { id: "p-1", title: "Framework Socratic Problem Solver", prompt: "Sebagai pakar evaluasi analitis, ajukan 5 pertanyaan Sokrates terhadap argumen berikut untuk menguji validitas dan asumsi tersembunyinya: [masukkan masalah]", desc: "Menguji validitas premis sebelum membuat keputusan", url: "" },
-                    { id: "p-2", title: "AI Workflow Optimizer 10x", prompt: "Petakan proses alur kerja berikut menjadi 3 tingkatan otomatisasi: (1) Otomatis penuh via AI, (2) Kolaborasi manusia-AI, (3) Memerlukan intuisi murni manusia: [masukkan alur]", desc: "Meningkatkan efisiensi kerja tanpa mengorbankan kualitas", url: "" }
-                ],
-                kuis: [
-                    { id: "k-1", title: "Kuis Logika & Algoritma Berpikir", url: "https://forms.google.com", desc: "Tes cepat 10 soal untuk menguji daya analisis kritis Anda." }
-                ],
-                dokumen: [
-                    { id: "d-1", title: "Buku Panduan Prompt Engineering V2.pdf", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", desc: "Dokumen komprehensif panduan penulisan instruksi presisi." }
-                ],
-                mobile: [
-                    { id: "m-1", title: "Acode - Powerful Code Editor", url: "https://play.google.com/store", desc: "Aplikasi editor kode HTML, CSS, JS langsung dari ponsel." }
-                ],
-                pc: [
-                    { id: "pc-1", title: "Visual Studio Code", url: "https://code.visualstudio.com", desc: "Editor teks standar industri dengan ekosistem ekstensi terlengkap." }
-                ]
+                prompt: [],
+                kuis: [],
+                dokumen: [],
+                mobile: [],
+                pc: []
             }
         };
 
-        window.appData = (function() {
-            try {
-                const saved = localStorage.getItem("portfolio_pb_state_v2");
-                if (saved) return JSON.parse(saved);
-            } catch (e) {
-                console.warn("Storage restricted or empty.");
-            }
-            return DEFAULT_STATE;
-        })();
+        // Buat objek appData murni di memori (tidak diikat ke localStorage di awal)
+        window.appData = JSON.parse(JSON.stringify(DEFAULT_STATE));
 
-        // Simpan ke memori lokal browser & otomatis kirim ke Cloud Firestore
+        // Pintu utama setiap ada data diubah oleh Admin:
+        // 1. Ubah state UI lokal. 
+        // 2. Tembak window.syncToFirestore() supaya menyimpan data ke cloud
         window.persistAppState = function() {
-            try {
-                localStorage.setItem("portfolio_pb_state_v2", JSON.stringify(window.appData));
-            } catch (e) {
-                console.error("Gagal simpan lokal:", e);
-            }
-            // Mengunggah ke server Cloud Firebase secara otomatis
             if (typeof window.syncToFirestore === "function") {
-                window.syncToFirestore();
+                window.syncToFirestore(); // Otomatis kirim ke database
             }
         };
 
@@ -1129,7 +1139,7 @@
             } else {
                 loginForm.classList.remove('hidden');
                 logoutSection.classList.add('hidden');
-                document.getElementById('adminEmailInput').value = window.appData.admin.email || "";
+                document.getElementById('adminEmailInput').value = "";
                 document.getElementById('adminPassInput').value = "";
             }
             modal.classList.remove('hidden');
@@ -1163,7 +1173,7 @@
             const reader = new FileReader();
             reader.onload = function(event) {
                 window.appData.profile.avatar = event.target.result;
-                window.persistAppState();
+                window.persistAppState(); // Akan menyala ke server
                 renderProfileElements();
                 showToast("Foto profil berhasil diperbarui!", "fas fa-image text-emerald-400");
             };
@@ -1171,6 +1181,7 @@
         }
 
         function renderProfileElements() {
+            if (!window.appData.profile) return;
             const avatar = window.appData.profile.avatar;
             document.getElementById('sidebarProfileImg').src = avatar;
             document.getElementById('mobileProfileImg').src = avatar;
@@ -1523,7 +1534,6 @@
         }
 
         function renderBelajarItems() {
-            // Prompts
             const promptCont = document.getElementById('promptListContainer');
             promptCont.innerHTML = "";
             (window.appData.belajar.prompt || []).forEach(p => {
@@ -1729,14 +1739,6 @@
             return doc.body.textContent || "";
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            renderProfileElements();
-            renderLinks();
-            renderFavourites();
-            renderNotes();
-            renderBelajarItems();
-            window.updateAdminUI();
-        });
     </script>
 </body>
 </html>
