@@ -1022,15 +1022,35 @@
             }
         };
 
-        // Buat objek appData murni di memori (tidak diikat ke localStorage di awal)
-        window.appData = JSON.parse(JSON.stringify(DEFAULT_STATE));
+        window.appData = (function() {
+            try {
+                const saved = localStorage.getItem("portfolio_pb_state_v2");
+                if (saved) {
+                    let parsedData = JSON.parse(saved);
+                    // KUNCI KEAMANAN: Reset status login dari cache browser
+                    // Firebase Auth yang akan memvalidasinya secara sah di belakang layar
+                    if (parsedData.admin) {
+                        parsedData.admin.isLoggedIn = false;
+                        parsedData.admin.email = "";
+                    }
+                    return parsedData;
+                }
+            } catch (e) {
+                console.warn("Storage restricted or empty.");
+            }
+            return JSON.parse(JSON.stringify(DEFAULT_STATE));
+        })();
 
-        // Pintu utama setiap ada data diubah oleh Admin:
-        // 1. Ubah state UI lokal. 
-        // 2. Tembak window.syncToFirestore() supaya menyimpan data ke cloud
+        // Simpan ke memori lokal browser & otomatis kirim ke Cloud Firestore
         window.persistAppState = function() {
+            try {
+                localStorage.setItem("portfolio_pb_state_v2", JSON.stringify(window.appData));
+            } catch (e) {
+                console.error("Gagal simpan lokal:", e);
+            }
+            // Mengunggah ke server Cloud Firebase secara otomatis
             if (typeof window.syncToFirestore === "function") {
-                window.syncToFirestore(); // Otomatis kirim ke database
+                window.syncToFirestore();
             }
         };
 
@@ -1139,7 +1159,7 @@
             } else {
                 loginForm.classList.remove('hidden');
                 logoutSection.classList.add('hidden');
-                document.getElementById('adminEmailInput').value = "";
+                document.getElementById('adminEmailInput').value = window.appData.admin.email || "";
                 document.getElementById('adminPassInput').value = "";
             }
             modal.classList.remove('hidden');
@@ -1739,6 +1759,15 @@
             return doc.body.textContent || "";
         }
 
+        // Jalankan UI rendering awal
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProfileElements();
+            renderLinks();
+            renderFavourites();
+            renderNotes();
+            renderBelajarItems();
+            window.updateAdminUI();
+        });
     </script>
 </body>
 </html>
