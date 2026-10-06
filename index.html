@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Branding Portfolio & Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tahoma: ['Tahoma', 'sans-serif'],
+                        times: ['"Times New Roman"', 'Times', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        .active-nav-link {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+            border-left: 4px solid #38bdf8;
+            color: #38bdf8 !important;
+            font-weight: 600;
+        }
+        .font-tahoma-render { font-family: Tahoma, sans-serif; }
+        .font-times-render { font-family: 'Times New Roman', Times, serif; }
+        .font-inter-render { font-family: 'Inter', sans-serif; }
+        .line-height-1-0 { line-height: 1.0; }
+        .line-height-1-15 { line-height: 1.15; }
+        .line-height-1-5 { line-height: 1.5; }
+        .line-height-2-0 { line-height: 2.0; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- Mobile Top Header Bar -->
+    <header class="md:hidden glass-panel border-b border-slate-800 p-4 sticky top-0 z-40 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div id="mobileHeaderAvatar" class="w-9 h-9 rounded-full bg-slate-700 overflow-hidden ring-2 ring-sky-500/50 flex-shrink-0">
+                <img id="mobileProfileImg" src="https://placehold.co/150x150/1e293b/38bdf8?text=ME" alt="Profile" class="w-full h-full object-cover">
+            </div>
+            <div>
+                <h1 class="font-bold text-sm tracking-wide text-white leading-tight" id="mobileHeaderName">My Portfolio</h1>
+                <span class="text-[10px] text-sky-400 font-mono tracking-wider flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> AI & Critical Thinker
+                </span>
+            </div>
+        </div>
+        <button onclick="toggleSidebar()" class="p-2 text-slate-300 hover:text-white rounded-lg hover:bg-slate-800 transition-colors" aria-label="Open Sidebar Menu">
+            <i class="fas fa-bars-staggered text-xl"></i>
+        </button>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="fixed md:sticky top-0 left-0 h-screen w-72 glass-panel border-r border-slate-800/80 p-5 flex flex-col z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        
+        <!-- Mobile close button -->
+        <div class="md:hidden absolute top-4 right-4">
+            <button onclick="toggleSidebar()" class="text-slate-400 hover:text-white text-2xl p-2 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- User Profile Brand Card in Sidebar -->
+        <div class="flex flex-col items-center text-center pb-6 border-b border-slate-800/80 pt-2">
+            <div class="relative group cursor-pointer" onclick="handleProfilePictureClick()">
+                <div class="w-24 h-24 rounded-2xl overflow-hidden ring-2 ring-sky-500/40 p-0.5 bg-gradient-to-tr from-sky-500 via-indigo-500 to-purple-500 shadow-lg shadow-sky-500/10">
+                    <img id="sidebarProfileImg" src="https://placehold.co/200x200/1e293b/38bdf8?text=ME" alt="Avatar" class="w-full h-full object-cover rounded-[14px]">
+                </div>
+                <div class="absolute inset-0 rounded-2xl bg-black/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs font-medium text-white gap-1 backdrop-blur-sm">
+                    <i class="fas fa-camera text-base text-sky-400"></i>
+                    <span>Foto</span>
+                </div>
+            </div>
+
+            <h2 id="sidebarProfileName" class="font-bold text-lg text-white mt-3 mb-0.5 tracking-tight">AI & Critical Mind</h2>
+            <p id="sidebarProfileBio" class="text-xs text-slate-400 max-w-[200px] leading-relaxed">Pemanfaat AI & Critical Thinker</p>
+            
+            <input type="file" id="profileImageFileInput" accept="image/*" class="hidden" onchange="onProfileImageSelected(event)">
+
+            <!-- Admin Badge Status -->
+            <div id="roleBadgeContainer" class="mt-3">
+                <span id="roleBadge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-slate-800/90 text-slate-400 border border-slate-700/60">
+                    <i class="fas fa-user-circle text-xs"></i> Mode Pengunjung
+                </span>
+            </div>
+        </div>
+
+        <!-- Sidebar Navigation Items -->
+        <nav class="flex-1 py-5 space-y-1.5 overflow-y-auto">
+            <button onclick="switchTab('menu')" id="nav-menu" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all text-sm group active-nav-link">
+                <i class="fas fa-home text-base text-sky-400 group-hover:scale-110 transition-transform"></i>
+                <span class="tracking-wide">MENU</span>
+            </button>
+            <button onclick="switchTab('links')" id="nav-links" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all text-sm group">
+                <i class="fas fa-link text-base text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                <span class="tracking-wide">LINK</span>
+            </button>
+            <button onclick="switchTab('favourite')" id="nav-favourite" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all text-sm group">
+                <i class="fas fa-heart text-base text-rose-400 group-hover:scale-110 transition-transform"></i>
+                <span class="tracking-wide">FAVOURITE</span>
+            </button>
+            <button onclick="switchTab('catatan')" id="nav-catatan" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all text-sm group">
+                <i class="fas fa-book-open text-base text-amber-400 group-hover:scale-110 transition-transform"></i>
+                <span class="tracking-wide">CATATAN</span>
+            </button>
+            <button onclick="switchTab('belajar')" id="nav-belajar" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800/60 transition-all text-sm group">
+                <i class="fas fa-graduation-cap text-base text-purple-400 group-hover:scale-110 transition-transform"></i>
+                <span class="tracking-wide">BELAJAR</span>
+            </button>
+        </nav>
+
+        <!-- Sidebar Footer & Admin Switcher -->
+        <div class="pt-4 border-t border-slate-800/80 flex flex-col gap-2">
+            <button id="adminAuthButton" onclick="openAdminAuthModal()" class="w-full py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 transition-all">
+                <i class="fas fa-key text-sky-400"></i>
+                <span id="adminAuthBtnLabel">Login Admin</span>
+            </button>
+            <p class="text-[11px] text-center text-slate-500 font-mono">Personal Branding &copy; 2026</p>
+        </div>
+    </aside>
+
+    <!-- Sidebar Backdrop for Mobile Screens -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden md:hidden"></div>
+
+    <!-- Main Content Dynamic Views -->
+    <main class="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto w-full">
+
+        <!-- ======================= TAB 1: MENU ======================= -->
+        <section id="tab-menu" class="space-y-6">
+            <div class="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 p-6 sm:p-8 shadow-xl">
+                <div class="absolute -right-16 -top-16 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
+                            <i class="fas fa-sparkles"></i> Personal Branding Hub
+                        </div>
+                        <div id="adminMenuControls" class="hidden">
+                            <button onclick="openEditAboutMeModal()" class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-xs font-medium text-white flex items-center gap-1.5 shadow-md shadow-sky-600/20 transition-all">
+                                <i class="fas fa-pen"></i> Edit About Me
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">
+                        Berfikir Kritis, Mengoptimalkan <span class="bg-gradient-to-r from-sky-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">Kecerdasan Artifisial</span>
+                    </h1>
+
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800 mt-4 relative group">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-quote-left text-sky-500/50 text-xl mt-1 flex-shrink-0"></i>
+                            <div class="flex-1">
+                                <h4 class="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">Tentang Saya (About Me)</h4>
+                                <p id="aboutMeContentText" class="text-slate-200 leading-relaxed text-sm sm:text-base">
+                                    saya yang terbiasa memanfaatkan AI dalam kehidupan sehari-hari untuk efisiensi pekerjaan ataupun lainnya, dengan poin plus saya yang sangat bisa berfikir kritis
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Specific Interactive Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                <div id="card-work-eff" class="glass-panel p-5 rounded-2xl border border-slate-700 hover:border-blue-500/50 transition-colors relative group">
+                    <div class="flex justify-between items-start mb-3">
+                        <i class="fas fa-bolt text-2xl text-blue-400"></i>
+                        <button onclick="editCardDetail('card1')" class="admin-only hidden text-slate-400 hover:text-white p-1 text-xs rounded hover:bg-slate-800" title="Edit Konten">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                    <h3 id="card1-title" class="font-bold text-lg mb-1 text-white">Work Efficiency</h3>
+                    <p id="card1-desc" class="text-sm text-slate-400">Otomatisasi tugas berulang dan riset data.</p>
+                </div>
+                
+                <div id="card-crit-anal" class="glass-panel p-5 rounded-2xl border border-slate-700 hover:border-teal-500/50 transition-colors relative group">
+                    <div class="flex justify-between items-start mb-3">
+                        <i class="fas fa-brain text-2xl text-teal-400"></i>
+                        <button onclick="editCardDetail('card2')" class="admin-only hidden text-slate-400 hover:text-white p-1 text-xs rounded hover:bg-slate-800" title="Edit Konten">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                    <h3 id="card2-title" class="font-bold text-lg mb-1 text-white">Critical Analysis</h3>
+                    <p id="card2-desc" class="text-sm text-slate-400">Evaluasi masalah sebelum merumuskan strategi.</p>
+                </div>
+                
+                <div onclick="switchTab('links')" class="glass-panel p-5 rounded-2xl border border-slate-700 hover:border-purple-500/50 transition-colors cursor-pointer group shadow-lg">
+                    <i class="fas fa-user-astronaut text-2xl text-purple-400 mb-3 group-hover:scale-110 transition-transform inline-block"></i>
+                    <h3 class="font-bold text-lg mb-1 text-white">About Me</h3>
+                    <p class="text-sm text-slate-400">Jelajahi tautan dan jejak digital saya &rarr;</p>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-white">Ekosistem Digital Mandiri</h4>
+                        <p class="text-xs text-slate-400">Jelajahi kumpulan catatan, prompt AI, tautan penting, hingga referensi favorit saya.</p>
+                    </div>
+                </div>
+                <button onclick="switchTab('belajar')" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-sky-400 transition-colors flex items-center gap-2 whitespace-nowrap">
+                    Buka Ruang Belajar <i class="fas fa-arrow-right text-[10px]"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ======================= TAB 2: LINK ======================= -->
+        <section id="tab-links" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                        <i class="fas fa-link text-emerald-400"></i> Media Sosial & Tautan Penting
+                    </h2>
+                    <p class="text-sm text-slate-400 mt-0.5">Segala medsos aktif, kanal portofolio, dan website yang sering saya akses.</p>
+                </div>
+                <div class="admin-only hidden">
+                    <button onclick="openAddLinkModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all">
+                        <i class="fas fa-plus"></i> Tambah Tautan Baru
+                    </button>
+                </div>
+            </div>
+            <div id="linksContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- ======================= TAB 3: FAVOURITE ======================= -->
+        <section id="tab-favourite" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                        <i class="fas fa-heart text-rose-400"></i> Koleksi Favorit
+                    </h2>
+                    <p class="text-sm text-slate-400 mt-0.5">Koleksi Gambar, Video, Musik, Game, dan Film yang menjadi inspirasi saya.</p>
+                </div>
+                <div class="admin-only hidden">
+                    <button onclick="openAddFavouriteModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-rose-600/20 transition-all">
+                        <i class="fas fa-plus"></i> Tambah Favorit
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterFavourites('all')" class="fav-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-rose-600 text-white transition-colors" data-cat="all">Semua</button>
+                <button onclick="filterFavourites('gambar')" class="fav-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-cat="gambar"><i class="fas fa-image mr-1"></i> Gambar</button>
+                <button onclick="filterFavourites('video')" class="fav-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-cat="video"><i class="fas fa-video mr-1"></i> Video</button>
+                <button onclick="filterFavourites('music')" class="fav-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-cat="music"><i class="fas fa-music mr-1"></i> Music</button>
+                <button onclick="filterFavourites('game')" class="fav-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-cat="game"><i class="fas fa-gamepad mr-1"></i> Game</button>
+                <button onclick="filterFavourites('film')" class="fav-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-cat="film"><i class="fas fa-film mr-1"></i> Film</button>
+            </div>
+
+            <div id="favouritesContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        </section>
+
+        <!-- ======================= TAB 4: CATATAN ======================= -->
+        <section id="tab-catatan" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                        <i class="fas fa-book-open text-amber-400"></i> Catatan, Esai & Buku Pendek
+                    </h2>
+                    <p class="text-sm text-slate-400 mt-0.5">Ruang penulisan gagasan kritis, artikel, dan dokumentasi pemikiran.</p>
+                </div>
+                <div class="admin-only hidden">
+                    <button onclick="openNoteEditorModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-amber-600/20 transition-all">
+                        <i class="fas fa-pen-nib"></i> Tulis Catatan Baru
+                    </button>
+                </div>
+            </div>
+            <div id="notesContainer" class="space-y-4"></div>
+        </section>
+
+        <!-- ======================= TAB 5: BELAJAR ======================= -->
+        <section id="tab-belajar" class="hidden space-y-6">
+            <div class="pb-4 border-b border-slate-800">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2.5">
+                    <i class="fas fa-graduation-cap text-purple-400"></i> Ruang Belajar & Resource
+                </h2>
+                <p class="text-sm text-slate-400 mt-0.5">Koleksi Prompt AI teruji, kuis interaktif, materi dokumen, dan aplikasi rekomendasi.</p>
+            </div>
+
+            <div class="flex items-center gap-2 border-b border-slate-800 overflow-x-auto pb-1 scrollbar-none">
+                <button onclick="switchBelajarSubTab('prompt')" id="subtab-btn-prompt" class="px-4 py-2.5 text-xs font-semibold border-b-2 border-purple-500 text-purple-400 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fas fa-terminal"></i> Prompt AI
+                </button>
+                <button onclick="switchBelajarSubTab('kuis')" id="subtab-btn-kuis" class="px-4 py-2.5 text-xs font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fas fa-question-circle"></i> Kuis (GForm/Quizizz)
+                </button>
+                <button onclick="switchBelajarSubTab('dokumen')" id="subtab-btn-dokumen" class="px-4 py-2.5 text-xs font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fas fa-file-pdf"></i> Dokumen (PDF/Word)
+                </button>
+                <button onclick="switchBelajarSubTab('mobile')" id="subtab-btn-mobile" class="px-4 py-2.5 text-xs font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fas fa-mobile-alt"></i> App Mobile
+                </button>
+                <button onclick="switchBelajarSubTab('pc')" id="subtab-btn-pc" class="px-4 py-2.5 text-xs font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 whitespace-nowrap">
+                    <i class="fas fa-desktop"></i> App PC
+                </button>
+            </div>
+
+            <div>
+                <!-- Prompt AI -->
+                <div id="belajar-prompt" class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium"><i class="fas fa-shield-alt text-amber-400 mr-1.5"></i> Salin prompt membutuhkan persetujuan izin Admin/Pemilik.</span>
+                        <div class="admin-only hidden">
+                            <button onclick="openAddBelajarItemModal('prompt')" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold flex items-center gap-1.5">
+                                <i class="fas fa-plus"></i> Tambah Prompt
+                            </button>
+                        </div>
+                    </div>
+                    <div id="promptListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+
+                <!-- Kuis -->
+                <div id="belajar-kuis" class="hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Uji kemampuan melalui kuis interaktif yang saya buat.</span>
+                        <div class="admin-only hidden">
+                            <button onclick="openAddBelajarItemModal('kuis')" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold flex items-center gap-1.5">
+                                <i class="fas fa-plus"></i> Tambah Kuis
+                            </button>
+                        </div>
+                    </div>
+                    <div id="kuisListContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+
+                <!-- Dokumen -->
+                <div id="belajar-dokumen" class="hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Bahan ajar, modul PDF, dan berkas Word yang dapat diakses.</span>
+                        <div class="admin-only hidden">
+                            <button onclick="openAddBelajarItemModal('dokumen')" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold flex items-center gap-1.5">
+                                <i class="fas fa-plus"></i> Tambah Dokumen
+                            </button>
+                        </div>
+                    </div>
+                    <div id="dokumenListContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+
+                <!-- Mobile -->
+                <div id="belajar-mobile" class="hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Aplikasi Android/iOS esensial untuk produktivitas & AI.</span>
+                        <div class="admin-only hidden">
+                            <button onclick="openAddBelajarItemModal('mobile')" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold flex items-center gap-1.5">
+                                <i class="fas fa-plus"></i> Tambah App Mobile
+                            </button>
+                        </div>
+                    </div>
+                    <div id="mobileListContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+
+                <!-- PC -->
+                <div id="belajar-pc" class="hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-400 font-medium">Software, tools desktop & ekstensi komputer untuk efisiensi maksimal.</span>
+                        <div class="admin-only hidden">
+                            <button onclick="openAddBelajarItemModal('pc')" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold flex items-center gap-1.5">
+                                <i class="fas fa-plus"></i> Tambah App PC
+                            </button>
+                        </div>
+                    </div>
+                    <div id="pcListContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== MODALS & POPUPS ==================== -->
+
+    <!-- Foto Profil Modal -->
+    <div id="profileActionModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-700 rounded-2xl w-full max-w-sm p-6 text-center space-y-4 shadow-2xl">
+            <h3 class="text-lg font-bold text-white">Foto Profil</h3>
+            <p class="text-xs text-slate-400">Pilih tindakan untuk foto profil akun Anda.</p>
+            <div class="space-y-2 pt-2">
+                <button onclick="viewProfileImagePreview()" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-medium flex items-center justify-center gap-2 border border-slate-700 transition-colors">
+                    <i class="fas fa-eye text-sky-400"></i> Lihat Foto Profil
+                </button>
+                <button onclick="triggerProfileImageUpload()" class="w-full py-2.5 px-4 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-medium flex items-center justify-center gap-2 shadow-lg shadow-sky-600/20 transition-colors">
+                    <i class="fas fa-folder-open"></i> Ganti Foto Profil (Buka File)
+                </button>
+            </div>
+            <button onclick="closeModal('profileActionModal')" class="text-xs text-slate-400 hover:text-white pt-2 inline-block">Batal</button>
+        </div>
+    </div>
+
+    <!-- Foto Profil Viewer -->
+    <div id="profileViewModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4" onclick="closeModal('profileViewModal')">
+        <div class="relative max-w-md w-full p-2" onclick="event.stopPropagation()">
+            <button onclick="closeModal('profileViewModal')" class="absolute -top-10 right-0 text-slate-300 hover:text-white text-xl p-2">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-slate-900">
+                <img id="enlargedProfileImg" src="" alt="Enlarged Profile" class="w-full h-auto max-h-[75vh] object-contain">
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Auth / Login Modal -->
+    <div id="adminAuthModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-700 rounded-3xl w-full max-w-md p-6 sm:p-7 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base" id="adminModalTitle">Autentikasi Firebase Admin</h3>
+                </div>
+                <button onclick="closeModal('adminAuthModal')" class="text-slate-400 hover:text-white p-1">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div id="adminLoginForm">
+                <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                    Masuk menggunakan akun <strong>Email & Password</strong> yang telah Anda buat di Firebase Console project <em>Portofolio-Kritis</em>.
+                </p>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Email Admin</label>
+                        <div class="relative">
+                            <i class="fas fa-envelope absolute left-3 top-3 text-slate-500 text-xs"></i>
+                            <input type="email" id="adminEmailInput" placeholder="admin@email.com" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-sky-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Kata Sandi</label>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-3 top-3 text-slate-500 text-xs"></i>
+                            <input type="password" id="adminPassInput" placeholder="••••••••" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-sky-500">
+                        </div>
+                    </div>
+                    <button type="button" onclick="handleAdminLoginSubmit()" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs transition-all shadow-lg shadow-sky-600/25 mt-2">
+                        Masuk via Firebase
+                    </button>
+                </div>
+            </div>
+
+            <div id="adminLogoutSection" class="hidden text-center space-y-4 py-2">
+                <p class="text-sm text-slate-300">Login sebagai: <strong class="text-sky-400" id="currentAdminEmailDisplay">admin</strong></p>
+                <button type="button" onclick="handleAdminLogout()" class="w-full py-2.5 rounded-xl bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-500/30 text-xs font-medium transition-all">
+                    Logout Akun Admin
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit About Me Modal -->
+    <div id="editAboutMeModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-700 rounded-3xl w-full max-w-lg p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <h3 class="font-bold text-white text-base flex items-center gap-2">
+                    <i class="fas fa-edit text-sky-400"></i> Edit Teks About Me
+                </h3>
+                <button onclick="closeModal('editAboutMeModal')" class="text-slate-400 hover:text-white p-1">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Teks Utama About Me</label>
+                    <textarea id="editAboutMeInput" rows="4" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-sky-500"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Nama Tampilan di Profil</label>
+                    <input type="text" id="editProfileNameInput" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Sub-judul / Bio Pendek</label>
+                    <input type="text" id="editProfileBioInput" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button onclick="closeModal('editAboutMeModal')" class="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300 hover:bg-slate-700">Batal</button>
+                    <button onclick="saveAboutMeChanges()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-xs font-semibold text-white shadow-lg shadow-sky-600/25">Simpan Perubahan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Grid Card Modal -->
+    <div id="editCardModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-700 rounded-2xl w-full max-w-sm p-6 space-y-4">
+            <h3 class="font-bold text-white text-base">Edit Kartu MENU</h3>
+            <input type="hidden" id="editCardTargetId">
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Judul (H3)</label>
+                    <input type="text" id="editCardTitleInput" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Deskripsi Ringkas</label>
+                    <textarea id="editCardDescInput" rows="2" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-sky-500"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button onclick="closeModal('editCardModal')" class="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300">Batal</button>
+                    <button onclick="saveCardDetailChanges()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LINK Modal -->
+    <div id="linkModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-700 rounded-2xl w-full max-w-md p-6 space-y-4">
+            <h3 class="font-bold text-white text-base" id="linkModalTitle">Tambah Tautan Baru</h3>
+            <input type="hidden" id="linkEditId">
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Nama Layanan / Medsos</label>
+                    <input type="text" id="linkTitleInput" placeholder="misal: GitHub, LinkedIn, YouTube, Portfolio Website" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">URL / Tautan (Lengkap dengan https://)</label>
+                    <input type="url" id="linkUrlInput" placeholder="https://..." class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Pilih Ikon</label>
+                    <select id="linkIconSelect" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:border-emerald-500">
+                        <option value="fab fa-github">GitHub</option>
+                        <option value="fab fa-linkedin">LinkedIn</option>
+                        <option value="fab fa-instagram">Instagram</option>
+                        <option value="fab fa-youtube">YouTube</option>
+                        <option value="fab fa-x-twitter">X (Twitter)</option>
+                        <option value="fab fa-tiktok">TikTok</option>
+                        <option value="fab fa-whatsapp">WhatsApp</option>
+                        <option value="fas fa-globe">Website Pribadi</option>
+                        <option value="fas fa-envelope">Email</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Keterangan Singkat</label>
+                    <input type="text" id="linkDescInput" placeholder="Kanal tutorial & riset AI" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:border-emerald-500">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button onclick="closeModal('linkModal')" class="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300">Batal</button>
+                    <button onclick="saveLinkItem()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white">Simpan Tautan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAVOURITE Modal -->
+    <div id="favouriteModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-700 rounded-2xl w-full max-w-md p-6 space-y-4">
+            <h3 class="font-bold text-white text-base">Tambah Favorit Baru</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Kategori</label>
+                    <select id="favCategorySelect" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                        <option value="gambar">Gambar (Design / Art / Foto)</option>
+                        <option value="video">Video (YouTube / Dokumenter)</option>
+                        <option value="music">Music (Spotify / Sound)</option>
+                        <option value="game">Game (Steam / Rekreasi)</option>
+                        <option value="film">Film (Movie / Seri)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Judul / Nama Karya</label>
+                    <input type="text" id="favTitleInput" placeholder="misal: Interstellar / Lofi Hip Hop / Cyberpunk" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">URL Tujuan (Ketika diklik)</label>
+                    <input type="url" id="favUrlInput" placeholder="https://..." class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">URL Gambar Sampul / Banner</label>
+                    <input type="url" id="favBannerInput" placeholder="https://images.unsplash.com/..." class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Komentar / Alasan Favorit</label>
+                    <input type="text" id="favDescInput" placeholder="Karya dengan narasi berpikir analitis yang hebat..." class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button onclick="closeModal('favouriteModal')" class="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300">Batal</button>
+                    <button onclick="saveFavouriteItem()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white">Simpan Favorit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATATAN Rich Text Editor Modal -->
+    <div id="noteEditorModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="glass-panel border border-slate-700 rounded-3xl w-full max-w-4xl p-5 sm:p-6 space-y-4 max-h-[95vh] flex flex-col shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <h3 class="font-bold text-white text-lg flex items-center gap-2">
+                    <i class="fas fa-feather-pointed text-amber-400"></i> Editor Penulisan Catatan & Artikel
+                </h3>
+                <button onclick="closeModal('noteEditorModal')" class="text-slate-400 hover:text-white p-1">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="sm:col-span-2">
+                    <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Judul Tulisan</label>
+                    <input type="text" id="noteTitleInput" placeholder="Contoh: Metodologi Berpikir Kritis di Era Gen-AI" class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white font-medium focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Kategori / Label</label>
+                    <input type="text" id="noteCategoryInput" placeholder="Esai / Buku / AI / Opini" class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:border-amber-500">
+                </div>
+            </div>
+
+            <!-- Toolbar Sesuai Spesifikasi Prompt -->
+            <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-2.5 flex flex-wrap items-center gap-2 text-xs">
+                <!-- Jenis Font: Times New Roman, Tahoma, Inter -->
+                <div class="flex items-center gap-1.5">
+                    <span class="text-slate-400 text-[11px]">Font:</span>
+                    <select id="noteFontFamilySelect" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-white text-xs">
+                        <option value="Inter">Inter (Sans)</option>
+                        <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                        <option value="Tahoma, sans-serif">Tahoma</option>
+                    </select>
+                </div>
+
+                <!-- Judul, Sub-judul, Normal -->
+                <div class="flex items-center gap-1 border-l border-slate-700 pl-2">
+                    <button type="button" onclick="formatNoteCommand('formatBlock', '<h2>')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">Judul</button>
+                    <button type="button" onclick="formatNoteCommand('formatBlock', '<h3>')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">Sub-Judul</button>
+                    <button type="button" onclick="formatNoteCommand('formatBlock', '<p>')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200">Normal</button>
+                </div>
+
+                <!-- Ukuran Font -->
+                <div class="flex items-center gap-1 border-l border-slate-700 pl-2">
+                    <span class="text-slate-400 text-[11px]">Ukuran:</span>
+                    <select id="noteFontSizeSelect" onchange="formatNoteFontSize(this.value)" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-white text-xs">
+                        <option value="3">14px</option>
+                        <option value="4">16px</option>
+                        <option value="5">18px</option>
+                        <option value="6">24px</option>
+                    </select>
+                </div>
+
+                <!-- Alignment: Justify, Center, Align Left, Align Right -->
+                <div class="flex items-center gap-1 border-l border-slate-700 pl-2">
+                    <button type="button" onclick="formatNoteCommand('justifyLeft')" class="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Align Left"><i class="fas fa-align-left"></i></button>
+                    <button type="button" onclick="formatNoteCommand('justifyCenter')" class="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Center"><i class="fas fa-align-center"></i></button>
+                    <button type="button" onclick="formatNoteCommand('justifyRight')" class="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Align Right"><i class="fas fa-align-right"></i></button>
+                    <button type="button" onclick="formatNoteCommand('justifyFull')" class="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Justify"><i class="fas fa-align-justify"></i></button>
+                </div>
+
+                <!-- Spasi Baris: 1.0, 1.15, 1.5, 2.0 -->
+                <div class="flex items-center gap-1.5 border-l border-slate-700 pl-2">
+                    <span class="text-slate-400 text-[11px]">Spasi:</span>
+                    <select id="noteLineSpacingSelect" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-white text-xs">
+                        <option value="line-height-1-0">1.0</option>
+                        <option value="line-height-1-15">1.15</option>
+                        <option value="line-height-1-5" selected>1.5</option>
+                        <option value="line-height-2-0">2.0</option>
+                    </select>
+                </div>
+
+                <!-- Format Text & Media -->
+                <div class="flex items-center gap-1 border-l border-slate-700 pl-2">
+                    <button type="button" onclick="formatNoteCommand('bold')" class="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Tebal"><i class="fas fa-bold"></i></button>
+                    <button type="button" onclick="formatNoteCommand('italic')" class="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Miring"><i class="fas fa-italic"></i></button>
+                    <button type="button" onclick="formatNoteCommand('underline')" class="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Garis Bawah"><i class="fas fa-underline"></i></button>
+                    <button type="button" onclick="promptInsertMedia('image')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200"><i class="fas fa-image mr-1"></i> Foto</button>
+                    <button type="button" onclick="promptInsertMedia('link')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200"><i class="fas fa-link mr-1"></i> Link</button>
+                    <button type="button" onclick="promptInsertMedia('video')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200"><i class="fas fa-video mr-1"></i> Video</button>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div id="noteContentEditor" contenteditable="true" class="flex-1 min-h-[220px] bg-slate-950/70 border border-slate-700 rounded-2xl p-4 text-white focus:outline-none focus:border-amber-500 overflow-y-auto leading-relaxed">
+                <p>Tuliskan gagasan, ringkasan riset, atau naskah Anda di sini...</p>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+                <span class="text-[11px] text-slate-500 font-mono">Format tersimpan otomatis.</span>
+                <div class="flex gap-2">
+                    <button onclick="closeModal('noteEditorModal')" class="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300 hover:bg-slate-700">Tutup</button>
+                    <button onclick="saveNotePost()" class="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-xs font-semibold text-white shadow-lg shadow-amber-600/20">Publikasikan Catatan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATATAN Reader Modal -->
+    <div id="noteReaderModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="glass-panel border border-slate-700 rounded-3xl w-full max-w-3xl p-6 sm:p-8 space-y-5 max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <span id="readNoteCategory" class="px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">Kategori</span>
+                <button onclick="closeModal('noteReaderModal')" class="text-slate-400 hover:text-white p-1">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            <div>
+                <h1 id="readNoteTitle" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">Judul Artikel</h1>
+                <p id="readNoteDate" class="text-xs text-slate-400 font-mono">Dipublikasikan pada...</p>
+            </div>
+            <div id="readNoteBody" class="prose prose-invert max-w-none text-slate-200 border-t border-slate-800/80 pt-5 space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- Belajar Item Modal -->
+    <div id="belajarItemModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-700 rounded-2xl w-full max-w-md p-6 space-y-4">
+            <h3 class="font-bold text-white text-base" id="belajarModalTitle">Tambah Item Belajar</h3>
+            <input type="hidden" id="belajarItemCategory">
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Judul / Nama Materi</label>
+                    <input type="text" id="belajarTitleInput" class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div id="belajarPromptFieldGroup" class="space-y-2">
+                    <label class="block text-xs font-medium text-slate-300">Isi Prompt AI</label>
+                    <textarea id="belajarPromptBodyInput" rows="3" placeholder="Tuliskan formula prompt lengkap di sini..." class="w-full bg-slate-950/70 border border-slate-700 rounded-xl p-3 text-sm text-white font-mono"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1" id="belajarUrlLabel">URL Tautan / File (GForm/Quizizz/Drive/PlayStore/dll)</label>
+                    <input type="url" id="belajarUrlInput" placeholder="https://..." class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Deskripsi Tambahan</label>
+                    <input type="text" id="belajarDescInput" placeholder="Keterangan singkat..." class="w-full bg-slate-950/70 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button onclick="closeModal('belajarItemModal')" class="px-4 py-2 rounded-xl bg-slate-800 text-xs text-slate-300">Batal</button>
+                    <button onclick="saveBelajarItem()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-semibold text-white">Simpan Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Access Modal -->
+    <div id="promptRequestModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-panel border border-slate-700 rounded-3xl w-full max-w-sm p-6 text-center space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mx-auto text-xl">
+                <i class="fas fa-lock"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-white text-base">Akses Disalin Terproteksi</h3>
+                <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                    Prompt ini dirancang khusus dengan metodologi kritis. Untuk menyalin teks lengkap, silakan hubungi langsung pemilik portofolio melalui WhatsApp / Kontak.
+                </p>
+            </div>
+            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-left">
+                <span class="text-[10px] text-slate-500 uppercase tracking-wider block font-semibold">Prompt yang diminta:</span>
+                <span id="requestedPromptTitleDisplay" class="text-xs text-amber-400 font-medium font-mono">Prompt Title</span>
+            </div>
+            <div class="space-y-2 pt-1">
+                <button onclick="sendPromptRequestToWhatsApp()" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25">
+                    <i class="fab fa-whatsapp text-sm"></i> Minta Akses via WhatsApp
+                </button>
+                <button onclick="closeModal('promptRequestModal')" class="w-full py-2 text-xs text-slate-400 hover:text-white">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Toast -->
+    <div id="appToast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="glass-panel border border-slate-700 bg-slate-900/95 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3">
+            <i id="toastIcon" class="fas fa-check-circle text-sky-400 text-lg"></i>
+            <span id="toastMessage" class="text-xs font-medium">Operasi berhasil!</span>
+        </div>
+    </div>
+
+    <!-- ==================== SKRIP MODUL FIREBASE AUTH & FIRESTORE CLOUD ==================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            signOut, 
+            onAuthStateChanged,
+            setPersistence,
+            browserLocalPersistence
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            onSnapshot, 
+            setDoc 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Konfigurasi Project Firebase Portofolio-Kritis Anda
+        const firebaseConfig = {
+            apiKey: "AIzaSyCWkS5mzxJ3LI_w2sn_uzAYLyiq5j5lyh0",
+            authDomain: "portofolio-kritis.firebaseapp.com",
+            projectId: "portofolio-kritis",
+            storageBucket: "portofolio-kritis.firebasestorage.app",
+            messagingSenderId: "274194143426",
+            appId: "1:274194143426:web:a93ccbaee6b6b94d9c035b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Pertahankan sesi login agar tidak perlu login berulang kali
+        setPersistence(auth, browserLocalPersistence).catch(console.error);
+
+        // Dokumen Firestore yang menyimpan data portofolio secara terpusat
+        const portfolioDoc = doc(db, "portfolio_data", "main_content");
+
+        // 1. SINKRONISASI REAL-TIME CLOUD:
+        // Setiap pengunjung membuka web, browser langsung membaca data terbaru dari server asia-southeast2
+        onSnapshot(portfolioDoc, (snapshot) => {
+            if (snapshot.exists()) {
+                const cloudData = snapshot.data();
+                if (cloudData.profile) window.appData.profile = cloudData.profile;
+                if (cloudData.links) window.appData.links = cloudData.links;
+                if (cloudData.favourites) window.appData.favourites = cloudData.favourites;
+                if (cloudData.notes) window.appData.notes = cloudData.notes;
+                if (cloudData.belajar) window.appData.belajar = cloudData.belajar;
+
+                // Tampilkan data ke tampilan website
+                renderProfileElements();
+                renderLinks();
+                renderFavourites();
+                renderNotes();
+                renderBelajarItems();
+            } else if (window.appData.admin.isLoggedIn) {
+                // Inisialisasi awal ke server jika data masih kosong
+                window.syncToFirestore();
+            }
+        }, (err) => {
+            console.warn("Koneksi Firestore stream:", err.message);
+        });
+
+        // 2. FUNGSI MENYIMPAN DATA KE SERVER CLOUD FIRESTORE
+        window.syncToFirestore = async function() {
+            if (!auth.currentUser) return;
+            try {
+                await setDoc(portfolioDoc, {
+                    profile: window.appData.profile,
+                    links: window.appData.links,
+                    favourites: window.appData.favourites,
+                    notes: window.appData.notes,
+                    belajar: window.appData.belajar,
+                    lastUpdated: new Date().toISOString()
+                });
+                window.showToast("Data berhasil tersimpan ke Cloud Firebase!", "fas fa-cloud-arrow-up text-emerald-400");
+            } catch (e) {
+                console.error("Gagal simpan ke cloud:", e);
+                window.showToast("Gagal simpan ke cloud: " + e.message, "fas fa-circle-exclamation text-rose-400");
+            }
+        };
+
+        // 3. MONITOR STATUS LOGIN ADMIN
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                window.appData.admin.isLoggedIn = true;
+                window.appData.admin.email = user.email;
+                window.showToast("Terotentikasi sebagai Admin: " + user.email, "fas fa-shield-alt text-emerald-400");
+            } else {
+                window.appData.admin.isLoggedIn = false;
+            }
+            window.updateAdminUI();
+        });
+
+        // 4. HANDLER LOGIN ADMIN
+        window.handleAdminLoginSubmit = async function() {
+            const emailInput = document.getElementById('adminEmailInput').value.trim();
+            const passInput = document.getElementById('adminPassInput').value;
+
+            if (!emailInput || !passInput) {
+                window.showToast("Email dan password wajib diisi!", "fas fa-exclamation text-rose-400");
+                return;
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, emailInput, passInput);
+                window.closeModal('adminAuthModal');
+                window.showToast("Login Admin Berhasil!", "fas fa-check text-emerald-400");
+                // Sinkronisasi data saat pertama kali masuk
+                window.syncToFirestore();
+            } catch (error) {
+                window.showToast("Gagal Login: " + error.message, "fas fa-circle-xmark text-rose-400");
+            }
+        };
+
+        // 5. HANDLER LOGOUT ADMIN
+        window.handleAdminLogout = async function() {
+            try {
+                await signOut(auth);
+                window.closeModal('adminAuthModal');
+                window.showToast("Berhasil logout dari akun admin.", "fas fa-info-circle text-sky-400");
+            } catch (error) {
+                window.showToast("Error saat logout: " + error.message, "fas fa-circle-xmark text-rose-400");
+            }
+        };
+    </script>
+
+    <!-- ==================== SKRIP LOGIKA UTAMA APLIKASI ==================== -->
+    <script>
+        const DEFAULT_STATE = {
+            profile: {
+                name: "AI & Critical Mind",
+                bio: "Pemanfaat AI & Critical Thinker",
+                avatar: "https://placehold.co/200x200/1e293b/38bdf8?text=ME",
+                aboutMe: "saya yang terbiasa memanfaatkan AI dalam kehidupan sehari-hari untuk efisiensi pekerjaan ataupun lainnya, dengan poin plus saya yang sangat bisa berfikir kritis",
+                card1: {
+                    title: "Work Efficiency",
+                    desc: "Otomatisasi tugas berulang dan riset data."
+                },
+                card2: {
+                    title: "Critical Analysis",
+                    desc: "Evaluasi masalah sebelum merumuskan strategi."
+                }
+            },
+            admin: {
+                email: "admin@portofolio.id",
+                isLoggedIn: false
+            },
+            links: [
+                { id: "lnk-1", title: "GitHub Profile", url: "https://github.com", icon: "fab fa-github", desc: "Repositori proyek dan kode sumber terbuka" },
+                { id: "lnk-2", title: "LinkedIn Network", url: "https://linkedin.com", icon: "fab fa-linkedin", desc: "Jejak profesional dan koneksi karir" },
+                { id: "lnk-3", title: "YouTube Channel", url: "https://youtube.com", icon: "fab fa-youtube", desc: "Eksplorasi AI, alur kerja dan edukasi" }
+            ],
+            favourites: [
+                { id: "fav-1", category: "gambar", title: "Cybernetic Architecture", url: "https://unsplash.com", banner: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop&q=60", desc: "Seni konsep integrasi teknologi masa depan" },
+                { id: "fav-2", category: "film", title: "Interstellar", url: "https://www.imdb.com/title/tt0816692/", banner: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&auto=format&fit=crop&q=60", desc: "Mahakarya sains, penalaran, dan emosi manusia" },
+                { id: "fav-3", category: "game", title: "Detroit: Become Human", url: "https://store.steampowered.com", banner: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60", desc: "Eksplorasi etika kecerdasan buatan" }
+            ],
+            notes: [
+                {
+                    id: "note-1",
+                    title: "Mengapa Berpikir Kritis Adalah Filter Utama Gen-AI",
+                    category: "Esai AI",
+                    date: "01 Oktober 2026",
+                    fontFamily: "Inter",
+                    lineSpacing: "line-height-1-5",
+                    content: "<p>Dalam era Large Language Models, nilai kompetitif manusia bertumpu pada kemampuan <strong>evaluasi kritis</strong>, verifikasi fakta, serta identifikasi bias sistemik.</p><p>AI bertindak sebagai pengungkit efisiensi, namun penalaran logis manusia adalah pengarah utamanya.</p>"
+                }
+            ],
+            belajar: {
+                prompt: [
+                    { id: "p-1", title: "Framework Socratic Problem Solver", prompt: "Sebagai pakar evaluasi analitis, ajukan 5 pertanyaan Sokrates terhadap argumen berikut untuk menguji validitas dan asumsi tersembunyinya: [masukkan masalah]", desc: "Menguji validitas premis sebelum membuat keputusan", url: "" },
+                    { id: "p-2", title: "AI Workflow Optimizer 10x", prompt: "Petakan proses alur kerja berikut menjadi 3 tingkatan otomatisasi: (1) Otomatis penuh via AI, (2) Kolaborasi manusia-AI, (3) Memerlukan intuisi murni manusia: [masukkan alur]", desc: "Meningkatkan efisiensi kerja tanpa mengorbankan kualitas", url: "" }
+                ],
+                kuis: [
+                    { id: "k-1", title: "Kuis Logika & Algoritma Berpikir", url: "https://forms.google.com", desc: "Tes cepat 10 soal untuk menguji daya analisis kritis Anda." }
+                ],
+                dokumen: [
+                    { id: "d-1", title: "Buku Panduan Prompt Engineering V2.pdf", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", desc: "Dokumen komprehensif panduan penulisan instruksi presisi." }
+                ],
+                mobile: [
+                    { id: "m-1", title: "Acode - Powerful Code Editor", url: "https://play.google.com/store", desc: "Aplikasi editor kode HTML, CSS, JS langsung dari ponsel." }
+                ],
+                pc: [
+                    { id: "pc-1", title: "Visual Studio Code", url: "https://code.visualstudio.com", desc: "Editor teks standar industri dengan ekosistem ekstensi terlengkap." }
+                ]
+            }
+        };
+
+        window.appData = (function() {
+            try {
+                const saved = localStorage.getItem("portfolio_pb_state_v2");
+                if (saved) return JSON.parse(saved);
+            } catch (e) {
+                console.warn("Storage restricted or empty.");
+            }
+            return DEFAULT_STATE;
+        })();
+
+        // Simpan ke memori lokal browser & otomatis kirim ke Cloud Firestore
+        window.persistAppState = function() {
+            try {
+                localStorage.setItem("portfolio_pb_state_v2", JSON.stringify(window.appData));
+            } catch (e) {
+                console.error("Gagal simpan lokal:", e);
+            }
+            // Mengunggah ke server Cloud Firebase secara otomatis
+            if (typeof window.syncToFirestore === "function") {
+                window.syncToFirestore();
+            }
+        };
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            if (isOpen) {
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.add('hidden');
+            } else {
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+            }
+        }
+
+        function switchTab(tabName) {
+            if (window.innerWidth < 768) {
+                const sidebar = document.getElementById('sidebar');
+                const backdrop = document.getElementById('sidebarBackdrop');
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.add('hidden');
+            }
+
+            const tabs = ['menu', 'links', 'favourite', 'catatan', 'belajar'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`nav-${t}`);
+                if (el) {
+                    if (t === tabName) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+                if (btn) {
+                    if (t === tabName) {
+                        btn.classList.add('active-nav-link');
+                    } else {
+                        btn.classList.remove('active-nav-link');
+                    }
+                }
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchBelajarSubTab(subTabKey) {
+            const subtabs = ['prompt', 'kuis', 'dokumen', 'mobile', 'pc'];
+            subtabs.forEach(s => {
+                const content = document.getElementById(`belajar-${s}`);
+                const btn = document.getElementById(`subtab-btn-${s}`);
+                if (content && btn) {
+                    if (s === subTabKey) {
+                        content.classList.remove('hidden');
+                        btn.classList.remove('border-transparent', 'text-slate-400');
+                        btn.classList.add('border-purple-500', 'text-purple-400');
+                    } else {
+                        content.classList.add('hidden');
+                        btn.classList.add('border-transparent', 'text-slate-400');
+                        btn.classList.remove('border-purple-500', 'text-purple-400');
+                    }
+                }
+            });
+        }
+
+        window.updateAdminUI = function() {
+            const isAdmin = window.appData.admin && window.appData.admin.isLoggedIn;
+            const adminOnlyElements = document.querySelectorAll('.admin-only');
+            const adminMenuControls = document.getElementById('adminMenuControls');
+            const roleBadge = document.getElementById('roleBadge');
+            const adminAuthBtnLabel = document.getElementById('adminAuthBtnLabel');
+
+            if (isAdmin) {
+                adminOnlyElements.forEach(el => el.classList.remove('hidden'));
+                if (adminMenuControls) adminMenuControls.classList.remove('hidden');
+                if (roleBadge) {
+                    roleBadge.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+                    roleBadge.innerHTML = `<i class="fas fa-check-shield text-xs"></i> Admin Aktif`;
+                }
+                if (adminAuthBtnLabel) adminAuthBtnLabel.innerText = "Kelola Admin";
+            } else {
+                adminOnlyElements.forEach(el => el.classList.add('hidden'));
+                if (adminMenuControls) adminMenuControls.classList.add('hidden');
+                if (roleBadge) {
+                    roleBadge.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-slate-800/90 text-slate-400 border border-slate-700/60";
+                    roleBadge.innerHTML = `<i class="fas fa-user-circle text-xs"></i> Mode Pengunjung`;
+                }
+                if (adminAuthBtnLabel) adminAuthBtnLabel.innerText = "Login Admin";
+            }
+            renderLinks();
+            renderFavourites();
+            renderNotes();
+            renderBelajarItems();
+        };
+
+        function openAdminAuthModal() {
+            const modal = document.getElementById('adminAuthModal');
+            const loginForm = document.getElementById('adminLoginForm');
+            const logoutSection = document.getElementById('adminLogoutSection');
+            const emailDisplay = document.getElementById('currentAdminEmailDisplay');
+
+            if (window.appData.admin.isLoggedIn) {
+                loginForm.classList.add('hidden');
+                logoutSection.classList.remove('hidden');
+                if (emailDisplay) emailDisplay.innerText = window.appData.admin.email;
+            } else {
+                loginForm.classList.remove('hidden');
+                logoutSection.classList.add('hidden');
+                document.getElementById('adminEmailInput').value = window.appData.admin.email || "";
+                document.getElementById('adminPassInput').value = "";
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function handleProfilePictureClick() {
+            if (window.appData.admin && window.appData.admin.isLoggedIn) {
+                document.getElementById('profileActionModal').classList.remove('hidden');
+            } else {
+                viewProfileImagePreview();
+            }
+        }
+
+        function viewProfileImagePreview() {
+            closeModal('profileActionModal');
+            const previewModal = document.getElementById('profileViewModal');
+            const enlargedImg = document.getElementById('enlargedProfileImg');
+            enlargedImg.src = window.appData.profile.avatar || "https://placehold.co/400x400/1e293b/38bdf8?text=ME";
+            previewModal.classList.remove('hidden');
+        }
+
+        function triggerProfileImageUpload() {
+            closeModal('profileActionModal');
+            document.getElementById('profileImageFileInput').click();
+        }
+
+        function onProfileImageSelected(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                window.appData.profile.avatar = event.target.result;
+                window.persistAppState();
+                renderProfileElements();
+                showToast("Foto profil berhasil diperbarui!", "fas fa-image text-emerald-400");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderProfileElements() {
+            const avatar = window.appData.profile.avatar;
+            document.getElementById('sidebarProfileImg').src = avatar;
+            document.getElementById('mobileProfileImg').src = avatar;
+            document.getElementById('sidebarProfileName').innerText = window.appData.profile.name;
+            document.getElementById('mobileHeaderName').innerText = window.appData.profile.name;
+            document.getElementById('sidebarProfileBio').innerText = window.appData.profile.bio;
+            document.getElementById('aboutMeContentText').innerText = window.appData.profile.aboutMe;
+            
+            document.getElementById('card1-title').innerText = window.appData.profile.card1.title;
+            document.getElementById('card1-desc').innerText = window.appData.profile.card1.desc;
+            document.getElementById('card2-title').innerText = window.appData.profile.card2.title;
+            document.getElementById('card2-desc').innerText = window.appData.profile.card2.desc;
+        }
+
+        function openEditAboutMeModal() {
+            document.getElementById('editAboutMeInput').value = window.appData.profile.aboutMe;
+            document.getElementById('editProfileNameInput').value = window.appData.profile.name;
+            document.getElementById('editProfileBioInput').value = window.appData.profile.bio;
+            document.getElementById('editAboutMeModal').classList.remove('hidden');
+        }
+
+        function saveAboutMeChanges() {
+            const text = document.getElementById('editAboutMeInput').value.trim();
+            const name = document.getElementById('editProfileNameInput').value.trim();
+            const bio = document.getElementById('editProfileBioInput').value.trim();
+
+            if (text) window.appData.profile.aboutMe = text;
+            if (name) window.appData.profile.name = name;
+            if (bio) window.appData.profile.bio = bio;
+
+            window.persistAppState();
+            renderProfileElements();
+            closeModal('editAboutMeModal');
+            showToast("Tentang Saya berhasil disimpan!", "fas fa-check text-sky-400");
+        }
+
+        function editCardDetail(cardKey) {
+            document.getElementById('editCardTargetId').value = cardKey;
+            const data = window.appData.profile[cardKey];
+            document.getElementById('editCardTitleInput').value = data.title;
+            document.getElementById('editCardDescInput').value = data.desc;
+            document.getElementById('editCardModal').classList.remove('hidden');
+        }
+
+        function saveCardDetailChanges() {
+            const cardKey = document.getElementById('editCardTargetId').value;
+            const title = document.getElementById('editCardTitleInput').value.trim();
+            const desc = document.getElementById('editCardDescInput').value.trim();
+
+            if (title && window.appData.profile[cardKey]) {
+                window.appData.profile[cardKey].title = title;
+                window.appData.profile[cardKey].desc = desc;
+                window.persistAppState();
+                renderProfileElements();
+                closeModal('editCardModal');
+                showToast("Informasi kartu diperbarui!", "fas fa-check text-blue-400");
+            }
+        }
+
+        function renderLinks() {
+            const container = document.getElementById('linksContainer');
+            container.innerHTML = "";
+
+            if (!window.appData.links || window.appData.links.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-10 text-slate-500 text-sm">Belum ada tautan ditambahkan.</div>`;
+                return;
+            }
+
+            window.appData.links.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-5 rounded-2xl border border-slate-700/80 hover:border-emerald-500/50 transition-all flex flex-col justify-between group";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                                <i class="${item.icon || 'fas fa-link'}"></i>
+                            </div>
+                            <div class="admin-only ${window.appData.admin.isLoggedIn ? '' : 'hidden'} flex gap-1">
+                                <button onclick="deleteLinkItem('${item.id}')" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-slate-800 transition-colors" title="Hapus Link">
+                                    <i class="fas fa-trash-alt text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-white text-base mb-1">${escapeHTML(item.title)}</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">${escapeHTML(item.desc || '')}</p>
+                    </div>
+                    <div class="pt-4 mt-3 border-t border-slate-800/80">
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors group-hover:translate-x-1 duration-200">
+                            Buka Tautan <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openAddLinkModal() {
+            document.getElementById('linkTitleInput').value = "";
+            document.getElementById('linkUrlInput').value = "";
+            document.getElementById('linkDescInput').value = "";
+            document.getElementById('linkModal').classList.remove('hidden');
+        }
+
+        function saveLinkItem() {
+            const title = document.getElementById('linkTitleInput').value.trim();
+            let url = document.getElementById('linkUrlInput').value.trim();
+            const icon = document.getElementById('linkIconSelect').value;
+            const desc = document.getElementById('linkDescInput').value.trim();
+
+            if (!title || !url) {
+                showToast("Nama dan URL tautan wajib diisi!", "fas fa-exclamation text-rose-400");
+                return;
+            }
+
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+
+            window.appData.links.push({ id: "lnk-" + Date.now(), title, url, icon, desc });
+            window.persistAppState();
+            renderLinks();
+            closeModal('linkModal');
+            showToast("Tautan baru berhasil ditambahkan!", "fas fa-check text-emerald-400");
+        }
+
+        function deleteLinkItem(id) {
+            window.appData.links = window.appData.links.filter(l => l.id !== id);
+            window.persistAppState();
+            renderLinks();
+            showToast("Tautan dihapus.", "fas fa-trash text-slate-400");
+        }
+
+        let currentFavFilter = 'all';
+
+        function filterFavourites(cat) {
+            currentFavFilter = cat;
+            document.querySelectorAll('.fav-filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.classList.add('bg-rose-600', 'text-white');
+                    btn.classList.remove('bg-slate-800', 'text-slate-300');
+                } else {
+                    btn.classList.remove('bg-rose-600', 'text-white');
+                    btn.classList.add('bg-slate-800', 'text-slate-300');
+                }
+            });
+            renderFavourites();
+        }
+
+        function renderFavourites() {
+            const container = document.getElementById('favouritesContainer');
+            container.innerHTML = "";
+
+            const filtered = currentFavFilter === 'all' 
+                ? window.appData.favourites 
+                : window.appData.favourites.filter(f => f.category === currentFavFilter);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-10 text-slate-500 text-sm">Belum ada koleksi favorit di kategori ini.</div>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "glass-panel rounded-2xl border border-slate-700/80 overflow-hidden hover:border-rose-500/50 transition-all flex flex-col justify-between group";
+                const bannerSrc = item.banner || "https://placehold.co/400x200/1e293b/rose?text=" + encodeURIComponent(item.title);
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="h-36 w-full relative overflow-hidden bg-slate-900">
+                            <img src="${bannerSrc}" alt="${escapeHTML(item.title)}" onerror="this.src='https://placehold.co/400x200/1e293b/rose?text=Preview'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-black/60 backdrop-blur-md text-rose-300 border border-rose-500/30">
+                                ${item.category}
+                            </span>
+                            <div class="admin-only ${window.appData.admin.isLoggedIn ? '' : 'hidden'} absolute top-2 right-2">
+                                <button onclick="deleteFavouriteItem('${item.id}')" class="p-1.5 rounded-lg bg-black/60 hover:bg-rose-600 text-white transition-colors">
+                                    <i class="fas fa-trash-alt text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-bold text-white text-base mb-1 line-clamp-1">${escapeHTML(item.title)}</h4>
+                            <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">${escapeHTML(item.desc || '')}</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0">
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-rose-600/30 text-rose-300 hover:text-white border border-rose-500/20 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors">
+                            Kunjungi Sumber <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openAddFavouriteModal() {
+            document.getElementById('favTitleInput').value = "";
+            document.getElementById('favUrlInput').value = "";
+            document.getElementById('favBannerInput').value = "";
+            document.getElementById('favDescInput').value = "";
+            document.getElementById('favouriteModal').classList.remove('hidden');
+        }
+
+        function saveFavouriteItem() {
+            const category = document.getElementById('favCategorySelect').value;
+            const title = document.getElementById('favTitleInput').value.trim();
+            let url = document.getElementById('favUrlInput').value.trim();
+            const banner = document.getElementById('favBannerInput').value.trim();
+            const desc = document.getElementById('favDescInput').value.trim();
+
+            if (!title || !url) {
+                showToast("Judul dan URL tujuan wajib diisi!", "fas fa-exclamation text-rose-400");
+                return;
+            }
+
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+
+            window.appData.favourites.push({ id: "fav-" + Date.now(), category, title, url, banner, desc });
+            window.persistAppState();
+            renderFavourites();
+            closeModal('favouriteModal');
+            showToast("Item favorit berhasil diposting!", "fas fa-heart text-rose-400");
+        }
+
+        function deleteFavouriteItem(id) {
+            window.appData.favourites = window.appData.favourites.filter(f => f.id !== id);
+            window.persistAppState();
+            renderFavourites();
+            showToast("Item favorit dihapus.", "fas fa-trash text-slate-400");
+        }
+
+        function renderNotes() {
+            const container = document.getElementById('notesContainer');
+            container.innerHTML = "";
+
+            if (!window.appData.notes || window.appData.notes.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-slate-500 text-sm">Belum ada catatan atau buku pendek yang dipublikasikan.</div>`;
+                return;
+            }
+
+            window.appData.notes.forEach(note => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-5 sm:p-6 rounded-2xl border border-slate-700/80 hover:border-amber-500/50 transition-all";
+                card.innerHTML = `
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                ${escapeHTML(note.category || 'Catatan')}
+                            </span>
+                            <span class="text-xs text-slate-500 font-mono">${note.date || ''}</span>
+                        </div>
+                        <div class="admin-only ${window.appData.admin.isLoggedIn ? '' : 'hidden'} flex gap-1">
+                            <button onclick="deleteNotePost('${note.id}')" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-slate-800 transition-colors" title="Hapus Tulisan">
+                                <i class="fas fa-trash-alt text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 leading-snug cursor-pointer hover:text-amber-400 transition-colors" onclick="openNoteReader('${note.id}')">
+                        ${escapeHTML(note.title)}
+                    </h3>
+                    <div class="text-sm text-slate-300 line-clamp-3 leading-relaxed mb-4">
+                        ${stripHTML(note.content)}
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
+                        <button onclick="openNoteReader('${note.id}')" class="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1.5 transition-colors">
+                            Baca Selengkapnya <i class="fas fa-arrow-right text-[10px]"></i>
+                        </button>
+                        <span class="text-[11px] text-slate-500 font-mono">Font: ${note.fontFamily || 'Inter'}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openNoteEditorModal() {
+            document.getElementById('noteTitleInput').value = "";
+            document.getElementById('noteCategoryInput').value = "";
+            document.getElementById('noteContentEditor').innerHTML = "<p>Mulai menulis ide dan pemikiran kritis Anda di sini...</p>";
+            document.getElementById('noteEditorModal').classList.remove('hidden');
+        }
+
+        function formatNoteCommand(cmd, val = null) {
+            document.execCommand(cmd, false, val);
+            document.getElementById('noteContentEditor').focus();
+        }
+
+        function formatNoteFontSize(sizeVal) {
+            document.execCommand('fontSize', false, sizeVal);
+            document.getElementById('noteContentEditor').focus();
+        }
+
+        function promptInsertMedia(type) {
+            if (type === 'image') {
+                const url = prompt("Masukkan tautan URL Gambar (https://...):");
+                if (url) formatNoteCommand('insertImage', url);
+            } else if (type === 'link') {
+                const url = prompt("Masukkan Tautan Web (https://...):");
+                if (url) formatNoteCommand('createLink', url);
+            } else if (type === 'video') {
+                const url = prompt("Masukkan Tautan Video (YouTube / Web):");
+                if (url) {
+                    const videoTag = `<div class="my-3 p-3 bg-slate-900 border border-slate-700 rounded-xl text-xs"><i class="fas fa-play-circle text-rose-500 mr-1.5"></i> Video Rujukan: <a href="${url}" target="_blank" class="text-sky-400 underline font-mono">${url}</a></div>`;
+                    document.execCommand('insertHTML', false, videoTag);
+                }
+            }
+        }
+
+        function saveNotePost() {
+            const title = document.getElementById('noteTitleInput').value.trim();
+            const category = document.getElementById('noteCategoryInput').value.trim() || "Artikel";
+            const fontFamily = document.getElementById('noteFontFamilySelect').value;
+            const lineSpacing = document.getElementById('noteLineSpacingSelect').value;
+            const content = document.getElementById('noteContentEditor').innerHTML;
+
+            if (!title) {
+                showToast("Judul tulisan wajib diisi!", "fas fa-exclamation text-rose-400");
+                return;
+            }
+
+            const today = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+            window.appData.notes.unshift({ id: "note-" + Date.now(), title, category, date: today, fontFamily, lineSpacing, content });
+            window.persistAppState();
+            renderNotes();
+            closeModal('noteEditorModal');
+            showToast("Catatan Anda berhasil dipublikasikan!", "fas fa-check text-amber-400");
+        }
+
+        function openNoteReader(id) {
+            const note = window.appData.notes.find(n => n.id === id);
+            if (!note) return;
+
+            document.getElementById('readNoteCategory').innerText = note.category || 'Catatan';
+            document.getElementById('readNoteTitle').innerText = note.title;
+            document.getElementById('readNoteDate').innerText = "Ditulis pada: " + (note.date || 'Terkini');
+            
+            const body = document.getElementById('readNoteBody');
+            body.innerHTML = note.content;
+            body.style.fontFamily = note.fontFamily || 'Inter';
+            body.className = `prose prose-invert max-w-none text-slate-200 border-t border-slate-800/80 pt-5 space-y-4 ${note.lineSpacing || 'line-height-1-5'}`;
+
+            document.getElementById('noteReaderModal').classList.remove('hidden');
+        }
+
+        function deleteNotePost(id) {
+            window.appData.notes = window.appData.notes.filter(n => n.id !== id);
+            window.persistAppState();
+            renderNotes();
+            showToast("Catatan dihapus.", "fas fa-trash text-slate-400");
+        }
+
+        function renderBelajarItems() {
+            // Prompts
+            const promptCont = document.getElementById('promptListContainer');
+            promptCont.innerHTML = "";
+            (window.appData.belajar.prompt || []).forEach(p => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-5 rounded-2xl border border-slate-700/80 hover:border-purple-500/50 transition-all flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[11px] font-semibold text-purple-400 uppercase tracking-wider flex items-center gap-1">
+                                <i class="fas fa-terminal"></i> AI Prompt
+                            </span>
+                            <div class="admin-only ${window.appData.admin.isLoggedIn ? '' : 'hidden'}">
+                                <button onclick="deleteBelajarItem('prompt', '${p.id}')" class="text-slate-400 hover:text-rose-400 p-1">
+                                    <i class="fas fa-trash-alt text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-white text-base mb-1">${escapeHTML(p.title)}</h4>
+                        <p class="text-xs text-slate-400 mb-3">${escapeHTML(p.desc || '')}</p>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80 text-xs font-mono text-slate-300 select-none overflow-hidden max-h-20 relative">
+                            <div class="blur-[2px]">${escapeHTML(p.prompt)}</div>
+                            <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-[1px] flex items-center justify-center">
+                                <span class="text-[10px] text-amber-400 font-semibold uppercase tracking-wider"><i class="fas fa-lock mr-1"></i> Terproteksi</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-4 mt-3 border-t border-slate-800/80 flex items-center justify-between">
+                        ${window.appData.admin.isLoggedIn 
+                            ? `<button onclick="copyPromptAsAdmin('${p.id}')" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold flex items-center gap-1.5">
+                                 <i class="fas fa-copy"></i> Salin (Admin)
+                               </button>`
+                            : `<button onclick="requestPromptAccess('${escapeHTML(p.title)}')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-semibold flex items-center gap-1.5">
+                                 <i class="fas fa-key"></i> Minta Akses Salin
+                               </button>`
+                        }
+                        <span class="text-[10px] text-slate-500 font-mono">Formula Teruji</span>
+                    </div>
+                `;
+                promptCont.appendChild(card);
+            });
+
+            renderGenericBelajarList('kuis', 'kuisListContainer', 'fas fa-question-circle', 'text-sky-400', 'Mulai Kuis');
+            renderGenericBelajarList('dokumen', 'dokumenListContainer', 'fas fa-file-pdf', 'text-rose-400', 'Buka Dokumen');
+            renderGenericBelajarList('mobile', 'mobileListContainer', 'fas fa-mobile-alt', 'text-emerald-400', 'Unduh App');
+            renderGenericBelajarList('pc', 'pcListContainer', 'fas fa-desktop', 'text-indigo-400', 'Buka Software');
+        }
+
+        function renderGenericBelajarList(subTabKey, containerId, iconClass, colorClass, buttonText) {
+            const cont = document.getElementById(containerId);
+            cont.innerHTML = "";
+            const list = window.appData.belajar[subTabKey] || [];
+            if (list.length === 0) {
+                cont.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500 text-xs">Belum ada konten di tab ini.</div>`;
+                return;
+            }
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-5 rounded-2xl border border-slate-700/80 hover:border-purple-500/50 transition-all flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 ${colorClass} flex items-center justify-center text-sm">
+                                <i class="${iconClass}"></i>
+                            </div>
+                            <div class="admin-only ${window.appData.admin.isLoggedIn ? '' : 'hidden'}">
+                                <button onclick="deleteBelajarItem('${subTabKey}', '${item.id}')" class="text-slate-400 hover:text-rose-400 p-1">
+                                    <i class="fas fa-trash-alt text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-white text-base mb-1">${escapeHTML(item.title)}</h4>
+                        <p class="text-xs text-slate-400 mb-3">${escapeHTML(item.desc || '')}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800/80">
+                        <a href="${item.url || '#'}" target="_blank" rel="noopener noreferrer" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-purple-600/30 text-purple-300 hover:text-white border border-purple-500/20 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors">
+                            ${buttonText} <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                `;
+                cont.appendChild(card);
+            });
+        }
+
+        function openAddBelajarItemModal(category) {
+            document.getElementById('belajarItemCategory').value = category;
+            document.getElementById('belajarTitleInput').value = "";
+            document.getElementById('belajarUrlInput').value = "";
+            document.getElementById('belajarDescInput').value = "";
+
+            const promptGroup = document.getElementById('belajarPromptFieldGroup');
+            const urlLabel = document.getElementById('belajarUrlLabel');
+            const modalTitle = document.getElementById('belajarModalTitle');
+
+            if (category === 'prompt') {
+                promptGroup.classList.remove('hidden');
+                modalTitle.innerText = "Tambah Formula Prompt AI";
+                urlLabel.innerText = "URL Rujukan / Demo (Opsional)";
+            } else {
+                promptGroup.classList.add('hidden');
+                modalTitle.innerText = `Tambah Materi: ${category.toUpperCase()}`;
+                urlLabel.innerText = "URL Tautan / Berkas (Wajib)";
+            }
+
+            document.getElementById('belajarItemModal').classList.remove('hidden');
+        }
+
+        function saveBelajarItem() {
+            const category = document.getElementById('belajarItemCategory').value;
+            const title = document.getElementById('belajarTitleInput').value.trim();
+            const promptBody = document.getElementById('belajarPromptBodyInput').value.trim();
+            let url = document.getElementById('belajarUrlInput').value.trim();
+            const desc = document.getElementById('belajarDescInput').value.trim();
+
+            if (!title) {
+                showToast("Judul wajib diisi!", "fas fa-exclamation text-rose-400");
+                return;
+            }
+
+            if (category === 'prompt' && !promptBody) {
+                showToast("Isi prompt AI tidak boleh kosong!", "fas fa-exclamation text-rose-400");
+                return;
+            }
+
+            if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+
+            if (!window.appData.belajar[category]) window.appData.belajar[category] = [];
+            window.appData.belajar[category].push({ id: "bel-" + Date.now(), title, url, desc, prompt: promptBody });
+            window.persistAppState();
+            renderBelajarItems();
+            closeModal('belajarItemModal');
+            showToast("Item berhasil ditambahkan!", "fas fa-check text-purple-400");
+        }
+
+        function deleteBelajarItem(category, id) {
+            window.appData.belajar[category] = window.appData.belajar[category].filter(i => i.id !== id);
+            window.persistAppState();
+            renderBelajarItems();
+            showToast("Item telah dihapus.", "fas fa-trash text-slate-400");
+        }
+
+        function copyPromptAsAdmin(id) {
+            const promptItem = (window.appData.belajar.prompt || []).find(p => p.id === id);
+            if (promptItem) {
+                copyTextToClipboard(promptItem.prompt);
+                showToast("Prompt disalin ke clipboard!", "fas fa-copy text-purple-400");
+            }
+        }
+
+        let pendingPromptTitle = "";
+        function requestPromptAccess(promptTitle) {
+            pendingPromptTitle = promptTitle;
+            document.getElementById('requestedPromptTitleDisplay').innerText = promptTitle;
+            document.getElementById('promptRequestModal').classList.remove('hidden');
+        }
+
+        function sendPromptRequestToWhatsApp() {
+            const message = encodeURIComponent(`Halo, saya melihat portofolio Anda dan ingin meminta akses menyalin Prompt AI: "${pendingPromptTitle}". Bisakah saya dibagikan formulanya? Terima kasih.`);
+            window.open(`https://wa.me/?text=${message}`, '_blank');
+            closeModal('promptRequestModal');
+        }
+
+        function copyTextToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try { document.execCommand('copy'); } catch (err) {}
+            document.body.removeChild(textarea);
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function showToast(message, iconClass = "fas fa-check-circle text-sky-400") {
+            const toast = document.getElementById('appToast');
+            const msgEl = document.getElementById('toastMessage');
+            const iconEl = document.getElementById('toastIcon');
+
+            msgEl.innerText = message;
+            iconEl.className = iconClass;
+
+            toast.classList.remove('opacity-0', 'translate-y-20', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-20', 'pointer-events-none');
+            }, 3000);
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        function stripHTML(html) {
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            return doc.body.textContent || "";
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProfileElements();
+            renderLinks();
+            renderFavourites();
+            renderNotes();
+            renderBelajarItems();
+            window.updateAdminUI();
+        });
+    </script>
+</body>
+</html>
